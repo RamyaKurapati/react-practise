@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class App extends React.Component {
   render() {
@@ -10,12 +10,23 @@ class App extends React.Component {
         <button onClick={this.props.ageUp}>Age Up</button>
         <button onClick={this.props.ageDown}>Age Down</button>
         <div>
-           {this.props.history.map((value,index)=>{
-             return <div style={{border: '1px solid green',margin:'5px', textAlign:'center'}} key={value.id}
-             onClick={()=>{this.props.deleteItem(value.id)}}>{value.age}</div>
-           })
-
-           }
+          {this.props.history.map((value, index) => {
+            return (
+              <div
+                style={{
+                  border: "1px solid green",
+                  margin: "5px",
+                  textAlign: "center"
+                }}
+                key={value.id}
+                onClick={() => {
+                  this.props.deleteItem(value.id);
+                }}
+              >
+                {value.age}
+              </div>
+            );
+          })}
         </div>
       </>
     );
@@ -24,8 +35,8 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    age: state.age,
-    history: state.history,
+    age: state.ageReducer.age,
+    history: state.ageReducer.history
   };
 }
 
@@ -37,8 +48,8 @@ function mapDisplatchToProps(dispatch) {
     ageDown: () => {
       dispatch({ type: "AGE_DOWN" });
     },
-    deleteItem : (key) => {
-      dispatch({type:'DELETE_ITEM', key:key})
+    deleteItem: key => {
+      dispatch({ type: "DELETE_ITEM", key: key });
     }
   };
 }
